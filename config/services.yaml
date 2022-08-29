@@ -30,6 +30,10 @@ services:
     App\Repository\CustomerRepository:
         class: \App\Repository\CustomerDoctrineRepository
 
+    App\Service\NotificationChannel\Pushy:
+        arguments:
+            $apiKey: '%env(resolve:PUSHY_API_KEY)%'
+
     App\Service\NotificationChannel\Twilio:
         arguments:
             $twilioNumber: '%env(resolve:TWILIO_NUMBER)%'

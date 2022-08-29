@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\NotificationLog;
 use App\Enum\DeliveryPolicy;
-use App\Enum\NotificationAttemptStatus;
 use App\Model\Notification;
-use Symfony\Component\Uid\Uuid;
 
 final class Notifier
 {
@@ -38,7 +35,7 @@ final class Notifier
                     return;
                 }
             } catch (\Exception $exception) {
-//                dump($exception->getMessage()); //@TODO: tmp
+                dump($exception->getMessage()); //@TODO: tmp
                 $this->logger->logFailure($notification->customerId(), $notificationChannel::class, $exception->getMessage());
             }
         }

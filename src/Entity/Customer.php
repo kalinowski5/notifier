@@ -21,6 +21,9 @@ final class Customer
     #[ORM\Column(type: "string")]
     private string $phoneNumber;
 
+    #[ORM\Column(type: "string")]
+    private ?string $deviceToken = null;
+
     public function __construct(CustomerId $id, EmailAddress $email, PhoneNumber $phoneNumber)
     {
         $this->id = (string) $id;
@@ -41,5 +44,15 @@ final class Customer
     public function phoneNumber(): PhoneNumber
     {
         return PhoneNumber::fromString($this->phoneNumber);
+    }
+
+    public function setDeviceToken(string $deviceToken): void
+    {
+        $this->deviceToken = $deviceToken;
+    }
+
+    public function deviceToken(): ?string
+    {
+        return $this->deviceToken;
     }
 }
