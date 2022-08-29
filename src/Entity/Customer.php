@@ -19,7 +19,7 @@ final class Customer
     private string $email;
 
     #[ORM\Column(type: "string")]
-    private string $phoneNumber; //@TODO: vo
+    private string $phoneNumber;
 
     public function __construct(CustomerId $id, EmailAddress $email, PhoneNumber $phoneNumber)
     {

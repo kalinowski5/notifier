@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\NotificationLog;
 use App\Enum\DeliveryPolicy;
+use App\Enum\NotificationAttemptStatus;
 use App\Model\Notification;
+use Symfony\Component\Uid\Uuid;
 
 final class Notifier
 {
@@ -16,7 +19,7 @@ final class Notifier
     public function __construct(
         private readonly iterable $notificationChannels,
         string $deliveryPolicy,
-        //@TODO: sending history logger (DB)
+        private readonly NotificationLogger $logger,
     )
     {
         $this->deliveryPolicy = DeliveryPolicy::from($deliveryPolicy);
@@ -28,13 +31,14 @@ final class Notifier
 
             try {
                 $notificationChannel->sendNotification($notification);
-                //@TODO: Log
+
+                $this->logger->logSuccess($notification->customerId(), $notificationChannel::class);
 
                 if (DeliveryPolicy::FIRST_WORKING_CHANNEL === $this->deliveryPolicy) {
                     return;
                 }
-            } catch (\Exception) {
-                //@TODO: Log problem
+            } catch (\Exception $exception) {
+                $this->logger->logFailure($notification->customerId(), $notificationChannel::class, $exception->getMessage());
             }
         }
     }
