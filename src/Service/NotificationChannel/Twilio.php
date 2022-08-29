@@ -22,6 +22,10 @@ final class Twilio implements NotificationChannel //@TODO: Test me
     {
         $customer = $this->customerRepository->findById($notification->customerId());
 
+        if (!$customer) {
+            return;
+        }
+
         $accountSid = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; //@TODO: Use DI
         $authToken = 'your_auth_token'; //@TODO: Use DI
         // In production, these should be environment variables. E.g.:

@@ -22,7 +22,7 @@ final class SendTestNotificationCommand extends Command
 {
 
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+//        private readonly EntityManagerInterface $entityManager,
         private readonly Notifier $notifier,
     ) {
         parent::__construct();

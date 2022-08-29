@@ -15,8 +15,8 @@ enum DeliveryPolicy: string
      * Sends notifications only via first working channel
      *
      * For example:
-     * There are 3 channels: SMS, Email, Push notification
-     * SMS provider is offline, so only Email notification will be sent
+     * There are 3 channels: SMS (temporarily broken), Email (operating normally), Push notification (operating normally)
+     * Since SMS provider is offline, only Email notification will be sent
      */
     case FIRST_WORKING_CHANNEL = 'first_working_channel';
 }

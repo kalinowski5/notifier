@@ -14,7 +14,7 @@ use Aws\Ses\SesClient;
 final class AmazonSES implements NotificationChannel //@TODO: Test me
 {
     public function __construct(
-        private readonly CustomerRepository $customerRepository,
+//        private readonly CustomerRepository $customerRepository,
     )
     {
 
