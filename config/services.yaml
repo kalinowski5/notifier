@@ -18,11 +18,23 @@ services:
         arguments:
             # Please be aware that order of channels is important (especially with 'first_working_channel' delivery policy)
             $notificationChannels:
+                - '@App\Service\NotificationChannel\AmazonSES'
                 - '@App\Service\NotificationChannel\Pushy'
                 - '@App\Service\NotificationChannel\AlwaysBroken'
                 - '@App\Service\NotificationChannel\DevNull'
-                - '@App\Service\NotificationChannel\AmazonSES'
                 - '@App\Service\NotificationChannel\Twilio'
 
             # For available policies, check: \App\Enum\DeliveryPolicy
             $deliveryPolicy: 'all_channels'
+
+    App\Repository\CustomerRepository:
+        class: \App\Repository\CustomerDoctrineRepository
+
+    App\Service\NotificationChannel\Twilio:
+        arguments:
+            $twilioNumber: '%env(resolve:TWILIO_NUMBER)%'
+
+    Twilio\Rest\Client:
+        arguments:
+            $username: '%env(resolve:TWILIO_ACCOUNT_SID)%'
+            $password: '%env(resolve:TWILIO_AUTH_TOKEN)%'

@@ -21,6 +21,11 @@ final class CustomerId
         return new self(Uuid::fromString($string));
     }
 
+    public function equals(self $other): bool
+    {
+        return $this->value->equals($other->value);
+    }
+
     public function __toString(): string
     {
        return (string) $this->value;

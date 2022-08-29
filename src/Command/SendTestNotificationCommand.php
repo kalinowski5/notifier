@@ -33,7 +33,7 @@ final class SendTestNotificationCommand extends Command
         $exampleCustomer = new Customer(
             CustomerId::fromString('2b9a44af-373f-4277-a9eb-e3c33efbe8d6'),
             EmailAddress::fromString('test@example.com'),
-            PhoneNumber::fromString('+48930349340'),
+            PhoneNumber::fromString('+48515452015'),
         );
 
 //        $this->entityManager->persist($exampleCustomer);

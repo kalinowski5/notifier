@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Customer;
+use App\Exception\CustomerNotFoundException;
 use App\ValueObject\CustomerId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,8 +19,17 @@ final class CustomerDoctrineRepository extends ServiceEntityRepository implement
         parent::__construct($registry, Customer::class);
     }
 
-    public function findById(CustomerId $id): ?Customer
+    /**
+     * @inheritDoc
+     */
+    public function getById(CustomerId $id): Customer
     {
-        return $this->find((string) $id);
+        $customer = $this->find((string) $id);
+
+        if ($customer) {
+            return $customer;
+        }
+
+        throw new CustomerNotFoundException($id);
     }
 }
