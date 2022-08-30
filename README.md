@@ -15,6 +15,7 @@
   * `FIRST_WORKING_CHANNEL`, which send notifications only via first working provider (fail-over)
 * Delivery policy and list of available channels can be set in the configuration file: `config/services.yml`
 * Each sending attempt is logged in the database with the following data: customer, time, channel, status and possible failure reason (see `notification_log` table)
+* All sensitive data (secrets, api keys, etc.) is stored in gitignored .env.local file and injected into services via container
 
 ## Tradeoffs and possible improvements
 Because of time constraints, I had to postpone the following improvements that could be made in real-world solution:

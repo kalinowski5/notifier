@@ -42,3 +42,11 @@ services:
         arguments:
             $username: '%env(resolve:TWILIO_ACCOUNT_SID)%'
             $password: '%env(resolve:TWILIO_AUTH_TOKEN)%'
+
+    App\Service\NotificationChannel\AmazonSES:
+        arguments:
+            $senderEmail: '%env(resolve:AWS_SES_SENDER_EMAIL)%'
+
+    Aws\Ses\SesClient:
+        arguments:
+            - { region: '%env(resolve:AWS_REGION)%', profile: 'default', version: '2010-12-01' }

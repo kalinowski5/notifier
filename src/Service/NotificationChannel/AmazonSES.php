@@ -8,13 +8,13 @@ use App\Repository\CustomerRepository;
 use App\Service\NotificationChannel;
 use Aws\Ses\SesClient;
 
-final class AmazonSES implements NotificationChannel //@TODO: Test me
+final class AmazonSES implements NotificationChannel
 {
     public function __construct(
         private readonly CustomerRepository $customerRepository,
-    )
-    {
-
+        private readonly SesClient $sesClient,
+        private readonly string $senderEmail,
+    ) {
     }
 
     public function sendNotification(Notification $notification): void
@@ -23,28 +23,17 @@ final class AmazonSES implements NotificationChannel //@TODO: Test me
 
         $recipientEmail = $customer->email();
 
-        $senderEmail = 'kalinowski5@gmail.com'; //@TODO: env
-        $amazonSesClientProfile = 'default';
-        $amazonSesClientVersion = '2010-12-01';
-        $amazonSesClientRegion = 'eu-north-1';//@TODO: env
-
-        $client = new SesClient([
-            'profile' => $amazonSesClientProfile,
-            'version' => $amazonSesClientVersion,
-            'region' => $amazonSesClientRegion,
-        ]);
-
         $htmlBody = sprintf('<p>%s</p>', $notification->message());
         $subject = $notification->subject();
         $plaintextBody = $notification->message();
         $charset = 'UTF-8';
 
-        $result = $client->sendEmail([
+        $this->sesClient->sendEmail([
             'Destination' => [
-                'ToAddresses' => [$recipientEmail],
+                'ToAddresses' => [(string)$recipientEmail],
             ],
-            'ReplyToAddresses' => [$senderEmail],
-            'Source' => $senderEmail,
+            'ReplyToAddresses' => [$this->senderEmail],
+            'Source' => $this->senderEmail,
             'Message' => [
                 'Body' => [
                     'Html' => [
@@ -62,7 +51,5 @@ final class AmazonSES implements NotificationChannel //@TODO: Test me
                 ],
             ],
         ]);
-        dump($result);
-
     }
 }
