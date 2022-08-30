@@ -54,6 +54,8 @@ final class SendTestNotificationCommand extends Command
             PhoneNumber::fromString('+48515425015'),
         );
 
+        $exampleCustomer->setDeviceToken('0ad39f9c');
+
         $this->entityManager->persist($exampleCustomer);
         $this->entityManager->flush();
 

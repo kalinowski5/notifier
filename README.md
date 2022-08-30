@@ -22,6 +22,7 @@ Because of time constraints, I had to postpone the following improvements that c
 * Use layered architecture namespace/directory structure (`Application`, `Domain`, `Infrastructure`, `UI`) instead of default Symfony's one (`Controller`, `Entity`, `Repository`, `Service`, ...)
 * Make it asynchronous (ie. using Symfony Messenger and some transport like `RabbitMQ` or `Amazon SQS`)
 * Extract `NotificationLogger` interface and add multiple implementations
+* Use translations for messages
 * Dockerize app
 
 ## System requirements
