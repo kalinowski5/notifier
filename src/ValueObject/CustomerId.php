@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-
 namespace App\ValueObject;
-
 
 use Symfony\Component\Uid\Uuid;
 
@@ -19,6 +17,11 @@ final class CustomerId
     public static function fromString(string $string): self
     {
         return new self(Uuid::fromString($string));
+    }
+
+    public static function fromUuid(Uuid $uuid): self
+    {
+        return new self($uuid);
     }
 
     public function equals(self $other): bool

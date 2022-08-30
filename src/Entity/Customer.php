@@ -15,13 +15,13 @@ final class Customer
     #[ORM\Column(type: "string", unique: true)]
     private string $id;
 
-    #[ORM\Column(type: "string", unique: true)]
+    #[ORM\Column(type: "string")]
     private string $email;
 
     #[ORM\Column(type: "string")]
     private string $phoneNumber;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: "string", nullable: true)]
     private ?string $deviceToken = null;
 
     public function __construct(CustomerId $id, EmailAddress $email, PhoneNumber $phoneNumber)

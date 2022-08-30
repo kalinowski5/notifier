@@ -1,12 +1,10 @@
 <?php
 declare(strict_types=1);
 
-
 namespace App\Command;
 
 use App\Entity\Customer;
 use App\Model\Notification;
-use App\Service\NotificationChannel;
 use App\Service\Notifier;
 use App\ValueObject\CustomerId;
 use App\ValueObject\EmailAddress;
@@ -16,13 +14,13 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[AsCommand(name: 'notifier:send-test-notification')]
 final class SendTestNotificationCommand extends Command
 {
-
     public function __construct(
-//        private readonly EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $entityManager,
         private readonly Notifier $notifier,
     ) {
         parent::__construct();
@@ -30,17 +28,10 @@ final class SendTestNotificationCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $exampleCustomer = new Customer(
-            CustomerId::fromString('2b9a44af-373f-4277-a9eb-e3c33efbe8d6'),
-            EmailAddress::fromString('test@example.com'),
-            PhoneNumber::fromString('+48515452015'),
-        );
-
-//        $this->entityManager->persist($exampleCustomer);
-//        $this->entityManager->flush();
+        $exampleCustomer = $this->seedExampleCustomer();
 
         $notification = new Notification(
-            CustomerId::fromString('2b9a44af-373f-4277-a9eb-e3c33efbe8d6'),
+            $exampleCustomer->id(),
             'Example subject',
             'Example message',
         );
@@ -50,5 +41,21 @@ final class SendTestNotificationCommand extends Command
         $output->writeln('Test notification was sent!');
 
         return Command::SUCCESS;
+    }
+
+    private function seedExampleCustomer(): Customer
+    {
+        $customerId = CustomerId::fromUuid(Uuid::v4());
+
+        $exampleCustomer = new Customer(
+            $customerId,
+            EmailAddress::fromString(substr((string)$customerId, 5).'@example.com'),
+            PhoneNumber::fromString('+48515425015'),
+        );
+
+        $this->entityManager->persist($exampleCustomer);
+        $this->entityManager->flush();
+
+        return $exampleCustomer;
     }
 }

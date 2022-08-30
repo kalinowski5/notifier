@@ -35,7 +35,6 @@ final class Notifier
                     return;
                 }
             } catch (\Exception $exception) {
-                dump($exception->getMessage()); //@TODO: tmp
                 $this->logger->logFailure($notification->customerId(), $notificationChannel::class, $exception->getMessage());
             }
         }
