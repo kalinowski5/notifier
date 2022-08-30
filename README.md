@@ -32,3 +32,5 @@ Because of time constraints, I had to postpone the following improvements that c
 Just run the following command in your favorite CLI: `make init`
 
 SQLite database will be automatically created and filled with sample data.
+
+In order to send test notifications, use `make send-test-notification`.

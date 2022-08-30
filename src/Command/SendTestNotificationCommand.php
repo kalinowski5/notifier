@@ -38,7 +38,8 @@ final class SendTestNotificationCommand extends Command
 
         $this->notifier->sendNotification($notification);
 
-        $output->writeln('Test notification was sent!');
+        $output->writeln('Test notification was sent via all available channels.');
+        $output->writeln('Check `notification_log` table for details.');
 
         return Command::SUCCESS;
     }

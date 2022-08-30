@@ -12,5 +12,5 @@ interface CustomerRepository
     /**
      * @throws CustomerNotFoundException
      */
-    public function getById(CustomerId $id): Customer; //@TODO: change name to getById and throw CustomerNotFoundException
+    public function getById(CustomerId $id): Customer;
 }
